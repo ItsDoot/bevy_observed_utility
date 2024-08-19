@@ -4,7 +4,7 @@ A state-of-the-art utility AI library for Bevy, built using ECS [observers](http
 
 See the [documentation](https://docs.rs/bevy_observed_utility/latest/bevy_observed_utility) for a complete walkthrough example of using the library.
 
-# Design Goals
+## Design Goals
 
 In order of priority:
 
@@ -20,7 +20,7 @@ In order of priority:
     - Pay only for what you use: Scoring and picking observers are only added if they are used.
     - Scoring and picking should be reasonably fast. Action performance is up to the user.
 
-# License
+## License
 
 `bevy_observed_utility` is dual-licensed under either:
 
