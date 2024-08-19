@@ -1,0 +1,28 @@
+[package]
+name = "bevy_observed_utility"
+version = "0.1.0"
+edition = "2021"
+authors = ["Christian Hughes"]
+description = "Ergonomic and Correct Utility AI for Bevy Engine"
+categories = ["game-development"]
+keywords = ["bevy", "utility-ai", "ai", "ecs", "observers"]
+repository = "https://github.com/ItsDoot/bevy_observed_utility"
+homepage = "https://github.com/ItsDoot/bevy_observed_utility"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+
+[features]
+default = []
+
+[dependencies]
+bevy = { version = "0.14", default-features = false }
+rand = { version = "0.8", optional = true }
+
+[dev-dependencies]
+approx = "0.5.1"
+criterion = "0.5.1"
+rand = { version = "0.8", features = ["std_rng"]}
+
+[[bench]]
+name = "score"
+harness = false
