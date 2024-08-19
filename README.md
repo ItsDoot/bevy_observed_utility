@@ -20,6 +20,10 @@ In order of priority:
     - Pay only for what you use: Scoring and picking observers are only added if they are used.
     - Scoring and picking should be reasonably fast. Action performance is up to the user.
 
+## Lifecycle Visualized
+
+![lifecycle](https://raw.githubusercontent.com/ItsDoot/bevy_observed_utility/main/lifecycle.png)
+
 ## License
 
 `bevy_observed_utility` is dual-licensed under either:
