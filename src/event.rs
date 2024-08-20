@@ -107,6 +107,7 @@ pub struct OnActionEnded {
 
 impl OnActionEnded {
     /// Creates a new [`Completed`][`ActionEndReason::Completed`] [`OnActionEnded`] event with the given action.
+    #[must_use]
     pub fn completed(action: ComponentId) -> Self {
         Self {
             action,
@@ -115,6 +116,7 @@ impl OnActionEnded {
     }
 
     /// Creates a new [`Cancelled`][`ActionEndReason::Cancelled`] [`OnActionEnded`] event with the given action.
+    #[must_use]
     pub fn cancelled(action: ComponentId) -> Self {
         Self {
             action,

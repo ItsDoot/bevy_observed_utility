@@ -42,6 +42,7 @@ pub struct Product {
 
 impl Product {
     /// Creates a new [`Product`] with the given threshold.
+    #[must_use]
     pub fn new(threshold: impl Into<Score>) -> Self {
         Self {
             threshold: threshold.into(),
@@ -50,12 +51,14 @@ impl Product {
     }
 
     /// Sets whether to use compensation to prevent the product from being too low.
+    #[must_use]
     pub fn with_compensation(mut self, compensation: bool) -> Self {
         self.use_compensation = compensation;
         self
     }
 
     /// Returns the threshold for the product of child scores to be considered a success.
+    #[must_use]
     pub fn threshold(&self) -> Score {
         self.threshold
     }

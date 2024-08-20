@@ -46,6 +46,7 @@ pub struct Measured {
 
 impl Measured {
     /// Creates a new measured score from the given function.
+    #[must_use]
     pub fn new(measure: impl Measure) -> Self {
         Self {
             measure: Box::new(measure),
@@ -53,11 +54,13 @@ impl Measured {
     }
 
     /// Uses the [`Measure`] to calculate the output score based on the input scores and weights.
+    #[must_use]
     pub fn calculate(&self, inputs: Vec<(&Score, &Weighted)>) -> Score {
         self.measure.calculate(inputs)
     }
 
     /// Returns the [`Measure`] used for scoring.
+    #[must_use]
     pub fn measure(&self) -> &dyn Measure {
         self.measure.as_ref()
     }
@@ -141,11 +144,13 @@ impl Weighted {
     };
 
     /// Creates a new scoring weight, clamped to the range `[0, 1]`.
+    #[must_use]
     pub fn new(weight: impl Into<Score>) -> Self {
         Self { weight: weight.into() }
     }
 
     /// Returns the weight.
+    #[must_use]
     pub fn get(&self) -> Score {
         self.weight
     }

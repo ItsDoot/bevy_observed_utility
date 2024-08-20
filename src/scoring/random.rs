@@ -41,6 +41,7 @@ pub struct RandomScore {
 
 impl RandomScore {
     /// Creates a new [`RandomScore`] with the given random number generator.
+    #[must_use]
     pub fn new(rng: impl RngCore + Send + Sync + 'static) -> Self {
         Self {
             rng: Box::new(rng),
@@ -49,6 +50,7 @@ impl RandomScore {
     }
 
     /// Creates a new [`RandomScore`] with the given random number generator and score range.
+    #[must_use]
     pub fn with_range(rng: impl RngCore + Send + Sync + 'static, range: impl RangeBounds<Score>) -> Self {
         Self {
             rng: Box::new(rng),
@@ -57,6 +59,7 @@ impl RandomScore {
     }
 
     /// Returns a mutable reference to the random number generator.
+    #[must_use]
     pub fn rng_mut(&mut self) -> &mut (impl RngCore + Send + Sync + 'static) {
         &mut self.rng
     }

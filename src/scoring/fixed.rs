@@ -35,11 +35,13 @@ pub struct FixedScore {
 
 impl FixedScore {
     /// Creates a new [`FixedScore`] with the given value.
+    #[must_use]
     pub fn new(value: impl Into<Score>) -> Self {
         Self { value: value.into() }
     }
 
     /// Returns the fixed value to score.
+    #[must_use]
     pub fn value(&self) -> Score {
         self.value
     }

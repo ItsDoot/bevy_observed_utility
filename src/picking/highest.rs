@@ -95,7 +95,7 @@ impl Highest {
             };
             run(target, commands.reborrow(), children, picker, &scores);
         } else {
-            for (target, children, picker) in targets.iter_mut() {
+            for (target, children, picker) in &mut targets {
                 run(target, commands.reborrow(), children, picker, &scores);
             }
         }

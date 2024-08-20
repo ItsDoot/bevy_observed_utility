@@ -116,6 +116,7 @@ impl Score {
     pub const MAX: Score = unsafe { Score::new_unchecked(1.) };
 
     /// Creates a new score with the given value, clamped to the range `[0, 1]`.
+    #[must_use]
     pub fn new(value: f32) -> Self {
         Self {
             value: value.clamp(0., 1.),
@@ -127,12 +128,13 @@ impl Score {
     /// # Safety
     ///
     /// The value must be in the range `[0, 1]`.
+    #[must_use]
     pub const unsafe fn new_unchecked(value: f32) -> Self {
         Self { value }
     }
 
     /// Returns the score's value.
-    #[inline(always)]
+    #[must_use]
     pub fn get(&self) -> f32 {
         self.value
     }
@@ -222,12 +224,10 @@ impl ScoreRange {
     };
 
     /// Creates a new score range with the given minimum and maximum scores.
+    #[must_use]
     pub fn new(mut min: Bound<Score>, mut max: Bound<Score>) -> Self {
         match (&mut min, &mut max) {
-            (Bound::Included(min), Bound::Included(max))
-            | (Bound::Included(min), Bound::Excluded(max))
-            | (Bound::Excluded(min), Bound::Included(max))
-            | (Bound::Excluded(min), Bound::Excluded(max))
+            (Bound::Included(min) | Bound::Excluded(min), Bound::Included(max) | Bound::Excluded(max))
                 if *max < *min =>
             {
                 std::mem::swap(min, max);
@@ -238,34 +238,37 @@ impl ScoreRange {
     }
 
     /// Creates a new score range from the given [`RangeBounds`].
+    #[must_use]
     pub fn from_bounds(bounds: impl RangeBounds<Score>) -> Self {
         Self::new(bounds.start_bound().cloned(), bounds.end_bound().cloned())
     }
 
     /// Returns the minimum score.
+    #[must_use]
     pub fn min(&self) -> Bound<Score> {
         self.min
     }
 
     /// Returns the minimum score as a `f32`.
+    #[must_use]
     pub fn min_f32(&self) -> f32 {
         match self.min {
-            Bound::Included(score) => score.get(),
-            Bound::Excluded(score) => score.get(),
+            Bound::Included(score) | Bound::Excluded(score) => score.get(),
             Bound::Unbounded => Score::MIN.get(),
         }
     }
 
     /// Returns the maximum score.
+    #[must_use]
     pub fn max(&self) -> Bound<Score> {
         self.max
     }
 
     /// Returns the maximum score as a `f32`.
+    #[must_use]
     pub fn max_f32(&self) -> f32 {
         match self.max {
-            Bound::Included(score) => score.get(),
-            Bound::Excluded(score) => score.get(),
+            Bound::Included(score) | Bound::Excluded(score) => score.get(),
             Bound::Unbounded => Score::MAX.get(),
         }
     }

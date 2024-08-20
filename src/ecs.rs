@@ -71,12 +71,8 @@ impl<'w, 's, T: ReferenceType> AncestorQuery<'w, 's, T> {
                     // Continue searching up the hierarchy
                     current = **parent;
                 }
-                Ok((false, None)) => {
+                Ok((false, None)) | Err(_) => {
                     // No parent with the component found
-                    return Err(QueryEntityError::NoSuchEntity(current));
-                }
-                Err(_) => {
-                    // No entity found
                     return Err(QueryEntityError::NoSuchEntity(current));
                 }
             }
@@ -91,16 +87,20 @@ impl<'w, 's, T: ReferenceType> AncestorQuery<'w, 's, T> {
 
 impl<'w, 's, T: Component> AncestorQuery<'w, 's, &'static T> {
     /// Returns a readonly reference to the [`Component`] `T` on the closest ancestor entity, if any.
+    ///
+    /// # Errors
+    ///
+    /// If the entity does not exist or the component is not found.
     pub fn get(&mut self, start: Entity) -> Result<&T, QueryEntityError> {
         // Check the cache first
         if let Entry::Occupied(entry) = self.cache.entry(start) {
             if self.fetch.contains(*entry.get()) {
                 // Cache hit
                 return self.fetch.get(*entry.get());
-            } else {
-                // Cache miss
-                entry.remove();
             }
+
+            // Cache miss
+            entry.remove();
         }
 
         self.find(start).and_then(|found| self.fetch.get(found))
@@ -109,16 +109,20 @@ impl<'w, 's, T: Component> AncestorQuery<'w, 's, &'static T> {
 
 impl<'w, 's, T: Component> AncestorQuery<'w, 's, &'static mut T> {
     /// Returns a mutable reference to the [`Component`] `T` on the closest ancestor entity, if any.
+    ///
+    /// # Errors
+    ///
+    /// If the entity does not exist or the component is not found.
     pub fn get_mut(&mut self, start: Entity) -> Result<Mut<T>, QueryEntityError> {
         // Check the cache first
         if let Entry::Occupied(entry) = self.cache.entry(start) {
             if self.fetch.contains(*entry.get()) {
                 // Cache hit
                 return self.fetch.get_mut(*entry.get());
-            } else {
-                // Cache miss
-                entry.remove();
             }
+
+            // Cache miss
+            entry.remove();
         }
 
         self.find(start).and_then(|found| self.fetch.get_mut(found))
@@ -269,9 +273,7 @@ impl<F: QueryFilter + 'static> Iterator for DFSPostTraversalIter<'_, '_, '_, F> 
             }
         }
 
-        let Some((depth, entity)) = self.param.queue.remove(self.visited - 1) else {
-            return None;
-        };
+        let (depth, entity) = self.param.queue.remove(self.visited - 1)?;
 
         self.visited -= 1;
         self.current_depth = depth;

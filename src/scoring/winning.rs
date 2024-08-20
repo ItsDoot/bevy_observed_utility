@@ -39,6 +39,7 @@ pub struct Winning {
 
 impl Winning {
     /// Creates a new [`Winning`] with the given threshold.
+    #[must_use]
     pub fn new(threshold: impl Into<Score>) -> Self {
         Self {
             threshold: threshold.into(),
@@ -46,13 +47,14 @@ impl Winning {
     }
 
     /// Returns the threshold for the maximum of child scores to be considered a success.
+    #[must_use]
     pub fn threshold(&self) -> Score {
         self.threshold
     }
 
     /// Sets the threshold for the maximum of child scores to be considered a success.
     pub fn set_threshold(&mut self, threshold: Score) {
-        self.threshold = threshold.into();
+        self.threshold = threshold;
     }
 
     /// [`Observer`] for [`Winning`] [`Score`] entities that scores based on all child [`Score`] entities.

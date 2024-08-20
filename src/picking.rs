@@ -69,6 +69,7 @@ pub struct Picker {
 
 impl Picker {
     /// Creates a new [`Picker`] with the given default action [`ComponentId`].
+    #[must_use]
     pub fn new(default: ComponentId) -> Self {
         Self {
             default,
@@ -78,6 +79,7 @@ impl Picker {
     }
 
     /// Adds an action [`ComponentId`] to pick based on the provided score [`Entity`].
+    #[must_use]
     pub fn with(mut self, score_entity: Entity, action: ComponentId) -> Self {
         self.choices.insert(score_entity, action);
         self
@@ -93,11 +95,13 @@ impl Picker {
     }
 
     /// Returns `true` if the given action is the default action.
+    #[must_use]
     pub fn is_default(&self, action: ComponentId) -> bool {
         action == self.default
     }
 
     /// Returs `true` if the last picked action is the default action.
+    #[must_use]
     pub fn picked_default(&self) -> bool {
         self.picked == self.default
     }

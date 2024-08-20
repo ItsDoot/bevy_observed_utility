@@ -39,6 +39,7 @@ pub struct AllOrNothing {
 
 impl AllOrNothing {
     /// Creates a new [`AllOrNothing`] with the given threshold.
+    #[must_use]
     pub fn new(threshold: impl Into<Score>) -> Self {
         Self {
             threshold: threshold.into(),
@@ -46,6 +47,7 @@ impl AllOrNothing {
     }
 
     /// Returns the threshold for the sum of child scores to be considered a success.
+    #[must_use]
     pub fn threshold(&self) -> Score {
         self.threshold
     }
@@ -68,9 +70,8 @@ impl AllOrNothing {
             if *child_score < settings.threshold() {
                 sum = 0.;
                 break;
-            } else {
-                sum += child_score.get();
             }
+            sum += child_score.get();
         }
 
         let Ok(mut actor_score) = scores.get_mut(trigger.entity()) else {

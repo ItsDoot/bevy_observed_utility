@@ -44,6 +44,7 @@ pub struct Evaluated {
 
 impl Evaluated {
     /// Creates a new [`Evaluated`] from the given evaluator.
+    #[must_use]
     pub fn new(evaluator: impl Evaluator) -> Self {
         Self {
             evaluator: Box::new(evaluator),
@@ -51,11 +52,13 @@ impl Evaluated {
     }
 
     /// Uses the [`Evaluator`] to evaluate the given value.
+    #[must_use]
     pub fn evaluate(&self, value: f32) -> f32 {
         self.evaluator.evaluate(value)
     }
 
     /// Returns the [`Evaluator`] used for scoring.
+    #[must_use]
     pub fn evaluator(&self) -> &dyn Evaluator {
         self.evaluator.as_ref()
     }
@@ -118,6 +121,7 @@ pub struct LinearEvaluator {
 
 impl LinearEvaluator {
     /// Creates a new linear evaluator with the given parameters.
+    #[must_use]
     pub fn new(a: Vec2, b: Vec2) -> Self {
         Self {
             a,
@@ -127,6 +131,7 @@ impl LinearEvaluator {
     }
 
     /// Creates a linear evaluator with the given range.
+    #[must_use]
     pub fn from_range(min: f32, max: f32) -> Self {
         Self::new(Vec2::new(min, 0.), Vec2::new(max, 1.))
     }
@@ -155,6 +160,7 @@ pub struct PowerEvaluator {
 
 impl PowerEvaluator {
     /// Creates a new power evaluator with the given parameters.
+    #[must_use]
     pub fn new(power: f32, a: Vec2, b: Vec2) -> Self {
         Self {
             power: power.clamp(0., 10000.),
@@ -165,11 +171,13 @@ impl PowerEvaluator {
     }
 
     /// Creates a full range power evaluator with the given power value.
+    #[must_use]
     pub fn from_power(power: f32) -> Self {
         Self::new(power, Vec2::new(0., 0.), Vec2::new(1., 1.))
     }
 
     /// Creates a power evaluator with the given power value and the given range.
+    #[must_use]
     pub fn from_range(power: f32, min: f32, max: f32) -> Self {
         Self::new(power, Vec2::new(min, 0.), Vec2::new(max, 1.))
     }
@@ -203,6 +211,7 @@ pub struct SigmoidEvaluator {
 
 impl SigmoidEvaluator {
     /// Creates a new sigmoid evaluator with the given parameters.
+    #[must_use]
     pub fn new(k: f32, a: Vec2, b: Vec2) -> Self {
         let k = k.clamp(-0.99999, 0.99999);
         Self {
@@ -218,11 +227,13 @@ impl SigmoidEvaluator {
     }
 
     /// Creates a full range sigmoid evaluator with the given `k` value.
+    #[must_use]
     pub fn from_k(k: f32) -> Self {
         Self::new(k, Vec2::new(0., 0.), Vec2::new(1., 1.))
     }
 
     /// Creates a sigmoid evaluator with the given `k` value and the given range.
+    #[must_use]
     pub fn from_range(k: f32, min: f32, max: f32) -> Self {
         Self::new(k, Vec2::new(min, 0.), Vec2::new(max, 1.))
     }
@@ -254,6 +265,7 @@ pub struct ExponentialEvaluator {
 
 impl ExponentialEvaluator {
     /// Creates a new exponential evaluator with the given parameters.
+    #[must_use]
     pub fn new(k: f32, a: Vec2, b: Vec2) -> Self {
         let k = k.clamp(-0.99999, 0.99999);
         Self {
@@ -265,11 +277,13 @@ impl ExponentialEvaluator {
     }
 
     /// Creates a full range exponential evaluator with the given `k` value.
+    #[must_use]
     pub fn from_k(k: f32) -> Self {
         Self::new(k, Vec2::new(0., 0.), Vec2::new(1., 1.))
     }
 
     /// Creates an exponential evaluator with the given `k` value and the given range.
+    #[must_use]
     pub fn from_range(k: f32, min: f32, max: f32) -> Self {
         Self::new(k, Vec2::new(min, 0.), Vec2::new(max, 1.))
     }
@@ -301,6 +315,7 @@ pub struct LogarithmicEvaluator {
 
 impl LogarithmicEvaluator {
     /// Creates a new logarithmic evaluator with the given parameters.
+    #[must_use]
     pub fn new(k: f32, a: Vec2, b: Vec2) -> Self {
         let k = k.clamp(-0.99999, 0.99999);
         Self {
@@ -312,11 +327,13 @@ impl LogarithmicEvaluator {
     }
 
     /// Creates a full range logarithmic evaluator with the given `k` value.
+    #[must_use]
     pub fn from_k(k: f32) -> Self {
         Self::new(k, Vec2::new(0., 0.), Vec2::new(1., 1.))
     }
 
     /// Creates a logarithmic evaluator with the given `k` value and the given range.
+    #[must_use]
     pub fn from_range(k: f32, min: f32, max: f32) -> Self {
         Self::new(k, Vec2::new(min, 0.), Vec2::new(max, 1.))
     }

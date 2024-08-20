@@ -64,6 +64,7 @@ pub struct FirstToScore {
 
 impl FirstToScore {
     /// Creates a new [`FirstToScore`] with the given threshold.
+    #[must_use]
     pub fn new(threshold: impl Into<Score>) -> Self {
         Self {
             threshold: threshold.into(),
@@ -71,6 +72,7 @@ impl FirstToScore {
     }
 
     /// Returns the threshold for the entity to be picked.
+    #[must_use]
     pub fn threshold(&self) -> Score {
         self.threshold
     }
@@ -114,7 +116,7 @@ impl FirstToScore {
             };
             run(target, commands.reborrow(), children, picker, settings, &scores);
         } else {
-            for (target, children, picker, settings) in targets.iter_mut() {
+            for (target, children, picker, settings) in &mut targets {
                 run(target, commands.reborrow(), children, picker, settings, &scores);
             }
         }

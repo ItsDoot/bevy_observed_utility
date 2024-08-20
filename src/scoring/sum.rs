@@ -39,6 +39,7 @@ pub struct Sum {
 
 impl Sum {
     /// Creates a new [`Sum`] with the given threshold.
+    #[must_use]
     pub fn new(threshold: impl Into<Score>) -> Self {
         Self {
             threshold: threshold.into(),
@@ -46,6 +47,7 @@ impl Sum {
     }
 
     /// Returns the threshold for the sum of child scores to be considered a success.
+    #[must_use]
     pub fn threshold(&self) -> Score {
         self.threshold
     }
