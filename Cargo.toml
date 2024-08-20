@@ -1,6 +1,6 @@
 [package]
 name = "bevy_observed_utility"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Christian Hughes"]
 description = "Ergonomic and Correct Utility AI for Bevy Engine"
