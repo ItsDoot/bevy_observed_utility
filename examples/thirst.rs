@@ -42,6 +42,10 @@ pub fn spawn_entities(mut commands: Commands, actions: Res<ActionIds>) {
         .add_child(thirst);
 }
 
+/// This is an action, which is a [`Component`] that can be picked by an actor.
+///
+/// This is also a [`Resource`] so that we can store the default value for it in the world,
+/// which lets it be edited by `bevy-inspector-egui`, for example. It's not necessary for all actions, however.
 #[derive(Component, Resource, Reflect)]
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub struct Drinking {
