@@ -53,6 +53,20 @@ pub struct ScoringPlugin;
 impl Plugin for ScoringPlugin {
     fn build(&self, app: &mut App) {
         app.observe(Self::run_scoring_post_order_dfs);
+
+        app.register_type::<Score>()
+            .register_type::<AllOrNothing>()
+            // .register_type::<Evaluated>() // TODO: Implement reflection for Evaluated
+            .register_type::<FixedScore>()
+            // .register_type::<Measured>() // TODO: Implement reflection for Measured
+            .register_type::<Product>()
+            .register_type::<Sum>()
+            .register_type::<Winning>();
+
+        #[cfg(feature = "rand")]
+        app.register_type::<RandomScore>();
+
+        app.register_type::<RunScoring>().register_type::<OnScore>();
     }
 }
 
@@ -207,6 +221,7 @@ impl std::iter::Sum<Score> for f32 {
     }
 }
 
+// TODO: implement Reflect when Bound is reflectable
 /// A range of [`Score`]s.
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub struct ScoreRange {

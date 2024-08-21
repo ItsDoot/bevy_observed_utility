@@ -25,7 +25,7 @@ pub use random::*;
 
 use crate::{
     ecs::TriggerGetEntity,
-    event::{OnPick, RunPicking},
+    event::{OnPick, OnPicked, RunPicking},
 };
 
 /// [`Plugin`] for picking actions based on the scores of child entities.
@@ -34,6 +34,17 @@ pub struct PickingPlugin;
 impl Plugin for PickingPlugin {
     fn build(&self, app: &mut App) {
         app.observe(Self::run_picking);
+
+        app.register_type::<Picker>()
+            .register_type::<FirstToScore>()
+            .register_type::<Highest>();
+
+        #[cfg(feature = "rand")]
+        app.register_type::<Random>();
+
+        app.register_type::<RunPicking>()
+            .register_type::<OnPick>()
+            .register_type::<OnPicked>();
     }
 }
 
