@@ -33,6 +33,7 @@ impl TriggerTargets for TargetedAction {
 /// [`Trigger`] extension trait that provides checked access to [`Trigger::entity`].
 pub trait TriggerGetEntity {
     /// Returns the triggered [`Entity`], but only if it's not [`Entity::PLACEHOLDER`].
+    #[must_use]
     fn get_entity(&self) -> Option<Entity>;
 }
 
@@ -192,6 +193,7 @@ impl<'w, 's, R: Resource + Default> OnceCommands<'w, 's, R> {
 /// [`Commands`] extension trait for library-specific commands.
 pub trait CommandsExt {
     /// Returns a [`Commands`] wrapper that provides a way to run commands only once, based on the presence of [`Resource`] `R`.
+    #[must_use]
     fn once<R: Resource + Default>(&mut self) -> OnceCommands<'_, '_, R>;
 }
 
@@ -214,6 +216,7 @@ impl<'w, 's, F: QueryFilter + 'static> DFSPostTraversal<'w, 's, F> {
     /// starting from a given root [`Entity`].
     ///
     /// The deepest children are visited first, followed by their parents.
+    #[must_use = "iterators are lazy and do nothing unless consumed"]
     pub fn iter(&mut self, root: Entity) -> DFSPostTraversalIter<'_, 'w, 's, F> {
         DFSPostTraversalIter::new(self, root)
     }
