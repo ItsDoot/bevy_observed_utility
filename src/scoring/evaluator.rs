@@ -106,13 +106,15 @@ impl Component for Evaluated {
 }
 
 /// Curves values within a certain range.
+#[reflect_trait]
 pub trait Evaluator: Send + Sync + 'static {
     /// Evaluates the input value and returns an output value.
     fn evaluate(&self, value: f32) -> f32;
 }
 
 /// [`Evaluator`] that uses a linear function to transform a value.
-#[derive(Clone, Copy, PartialEq, Debug)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Evaluator, PartialEq, Debug)]
 pub struct LinearEvaluator {
     a: Vec2,
     by: f32,
@@ -150,7 +152,8 @@ impl Default for LinearEvaluator {
 }
 
 /// [`Evaluator`] that uses a power function to transform a value.
-#[derive(Clone, Copy, PartialEq, Debug)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Evaluator, PartialEq, Debug)]
 pub struct PowerEvaluator {
     a: Vec2,
     bx: f32,
@@ -197,7 +200,8 @@ impl Default for PowerEvaluator {
 }
 
 /// [`Evaluator`] that uses a sigmoid function to transform a value.
-#[derive(Clone, Copy, PartialEq, Debug)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Evaluator, PartialEq, Debug)]
 pub struct SigmoidEvaluator {
     a: Vec2,
     b: Vec2,
@@ -255,7 +259,8 @@ impl Default for SigmoidEvaluator {
 }
 
 /// [`Evaluator`] that uses an exponential function to transform a value.
-#[derive(Clone, Copy, PartialEq, Debug)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Evaluator, PartialEq, Debug)]
 pub struct ExponentialEvaluator {
     a: Vec2,
     bx: f32,
@@ -305,7 +310,8 @@ impl Default for ExponentialEvaluator {
 }
 
 /// [`Evaluator`] that uses a logarithmic function to transform a value.
-#[derive(Clone, Copy, PartialEq, Debug)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Evaluator, PartialEq, Debug)]
 pub struct LogarithmicEvaluator {
     a: Vec2,
     bx: f32,

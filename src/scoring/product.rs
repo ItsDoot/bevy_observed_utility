@@ -30,9 +30,8 @@ use crate::{ecs::CommandsExt, event::OnScore, scoring::Score};
 /// # world.flush();
 /// # assert_relative_eq!(world.get::<Score>(scorer).unwrap().get(), 0.21);
 /// ```
-#[derive(Reflect)]
-#[derive(Clone, Copy, PartialEq, Debug, Default)]
-#[reflect(Component)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug, Default)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct Product {
     /// The threshold for the product of child scores to be considered a success.
     threshold: Score,

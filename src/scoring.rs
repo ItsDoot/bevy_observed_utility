@@ -48,6 +48,7 @@ pub use self::sum::*;
 pub use self::winning::*;
 
 /// [`Plugin`] for scoring entities.
+#[derive(Default)]
 pub struct ScoringPlugin;
 
 impl Plugin for ScoringPlugin {
@@ -57,8 +58,18 @@ impl Plugin for ScoringPlugin {
         app.register_type::<Score>()
             .register_type::<AllOrNothing>()
             // .register_type::<Evaluated>() // TODO: Implement reflection for Evaluated
+            .register_type::<LinearEvaluator>()
+            .register_type::<PowerEvaluator>()
+            .register_type::<SigmoidEvaluator>()
+            .register_type::<ExponentialEvaluator>()
+            .register_type::<LogarithmicEvaluator>()
             .register_type::<FixedScore>()
             // .register_type::<Measured>() // TODO: Implement reflection for Measured
+            .register_type::<Weighted>()
+            .register_type::<WeightedSum>()
+            .register_type::<WeightedProduct>()
+            .register_type::<WeightedMax>()
+            .register_type::<WeightedRMS>()
             .register_type::<Product>()
             .register_type::<Sum>()
             .register_type::<Winning>();
@@ -115,7 +126,7 @@ impl ScoringPlugin {
 /// [`Component`] for an entity's score for a given score type, ranging from 0 to 1.
 #[derive(Component, Reflect)]
 #[derive(Clone, Copy, PartialEq, PartialOrd, Debug, Default)]
-#[reflect(Component)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct Score {
     /// The score value, clamped to the range `[0, 1]`.
     value: f32,

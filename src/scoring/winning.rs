@@ -29,9 +29,8 @@ use crate::{ecs::CommandsExt, event::OnScore, scoring::Score};
 /// # world.flush();
 /// # assert_eq!(world.get::<Score>(scorer).unwrap().get(), 0.7);
 /// ```
-#[derive(Reflect)]
-#[derive(Clone, Copy, PartialEq, Debug, Default)]
-#[reflect(Component)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug, Default)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct Winning {
     /// The threshold for the maximum of child scores to be considered a success.
     threshold: Score,

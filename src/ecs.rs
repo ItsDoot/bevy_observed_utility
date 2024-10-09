@@ -16,6 +16,8 @@ use bevy::{
 };
 
 /// A [`TriggerTargets`] used by the action [`Event`]s to trigger an action [`ComponentId`] for a given entity.
+#[derive(Reflect, Clone, Copy, PartialEq, Eq, Debug)]
+#[reflect(PartialEq, Debug)]
 pub struct TargetedAction(pub Entity, pub ComponentId);
 
 impl TriggerTargets for TargetedAction {

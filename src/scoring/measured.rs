@@ -117,8 +117,8 @@ impl Component for Measured {
 /// [`Score`] [`Component`] that's added to each child [`Score`] entity to weight it in the [`Measure`].
 ///
 /// See [`Measured`] for more information.
-#[derive(Component, Reflect)]
-#[derive(Clone, Copy, PartialEq, Debug)]
+#[derive(Component, Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct Weighted {
     /// The weight of a score, clamped to the range `[0, 1]`.
     weight: Score,
@@ -162,13 +162,15 @@ impl Weighted {
 }
 
 /// A measure of scoring.
+#[reflect_trait]
 pub trait Measure: Send + Sync + 'static {
     /// Calculates the output score based on the input scores and weights.
     fn calculate(&self, inputs: Vec<(&Score, &Weighted)>) -> Score;
 }
 
 /// [`Measure`] that calculates the sum of the weighted input scores.
-#[derive(Clone, Copy)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Measure, PartialEq, Debug)]
 pub struct WeightedSum;
 
 impl Measure for WeightedSum {
@@ -181,7 +183,8 @@ impl Measure for WeightedSum {
 }
 
 /// [`Measure`] that calculates the product of the weighted input scores.
-#[derive(Clone, Copy)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Measure, PartialEq, Debug)]
 pub struct WeightedProduct;
 
 impl Measure for WeightedProduct {
@@ -194,7 +197,8 @@ impl Measure for WeightedProduct {
 }
 
 /// [`Measure`] that calculates the max of the weighted input scores.
-#[derive(Clone, Copy)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Measure, PartialEq, Debug)]
 pub struct WeightedMax;
 
 impl Measure for WeightedMax {
@@ -207,7 +211,8 @@ impl Measure for WeightedMax {
 }
 
 /// [`Measure`] that calculates the root mean square of the input scores.
-#[derive(Clone, Copy)]
+#[derive(Reflect, Clone, Copy, PartialEq, Debug)]
+#[reflect(Measure, PartialEq, Debug)]
 pub struct WeightedRMS;
 
 impl Measure for WeightedRMS {

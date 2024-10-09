@@ -44,14 +44,14 @@ use bevy::{ecs::component::ComponentId, prelude::*};
 /// ensuring that all children are scored before their parents.
 #[derive(Event, Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
-#[reflect(Component, Default)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct RunScoring;
 
 /// This [`Event`] is listened to by scoring systems to calculate the score(s) for a given entity.
 /// DO NOT TRIGGER MANUALLY, trigger [`RunScoring`] instead.
 #[derive(Event, Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
-#[reflect(Component, Default)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct OnScore;
 
 ////////////////////////////////////////////////////////////
@@ -62,13 +62,13 @@ pub struct OnScore;
 /// or all actor entities if no target is specified.
 #[derive(Event, Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
-#[reflect(Component, Default)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct RunPicking;
 
 /// Listen to this [`Event`] to handle picking an action for the target actor entity.
 #[derive(Event, Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
-#[reflect(Component, Default)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct OnPick;
 
 /// Listen to this [`Event`] to check which action was picked for the target actor entity.
@@ -77,7 +77,7 @@ pub struct OnPick;
 /// [`Picker`]: crate::picking::Picker
 #[derive(Event, Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-#[reflect(Component)]
+#[reflect(Component, PartialEq, Debug)]
 pub struct OnPicked {
     /// [`ComponentId`] of the action that was picked.
     pub action: ComponentId,
@@ -92,7 +92,7 @@ pub struct OnPicked {
 /// This event SHOULD NOT be triggered without a target entity.
 #[derive(Event, Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
-#[reflect(Component, Default)]
+#[reflect(Component, PartialEq, Debug, Default)]
 pub struct RequestAction {
     /// The [`ComponentId`] of the action that was requested, if any.
     pub action: Option<ComponentId>,
@@ -101,7 +101,7 @@ pub struct RequestAction {
 /// This [`Event`] is triggered by action lifecycle to indicate that they have been initiated.
 #[derive(Event, Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-#[reflect(Component)]
+#[reflect(Component, PartialEq, Debug)]
 pub struct OnActionInitiated {
     /// [`ComponentId`] of the action that was initiated.
     pub action: ComponentId,
@@ -113,7 +113,7 @@ pub struct OnActionInitiated {
 /// An action will be cancelled if a different action is [requested][`RequestAction`] before it completes.
 #[derive(Event, Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-#[reflect(Component)]
+#[reflect(Component, PartialEq, Debug)]
 pub struct OnActionEnded {
     /// [`ComponentId`] of the action that was finished.
     pub action: ComponentId,
@@ -144,6 +144,7 @@ impl OnActionEnded {
 /// The reason [`OnActionEnded`] was triggered.
 #[derive(Reflect)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[reflect(PartialEq, Debug)]
 pub enum ActionEndReason {
     /// The action was completed successfully.
     Completed,

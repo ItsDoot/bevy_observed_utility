@@ -29,6 +29,7 @@ use crate::{
 };
 
 /// [`Plugin`] for picking actions based on the scores of child entities.
+#[derive(Default)]
 pub struct PickingPlugin;
 
 impl Plugin for PickingPlugin {
@@ -68,7 +69,7 @@ impl PickingPlugin {
 /// [`Component`] for configuring the action to pick based on the scores of child entities.
 #[derive(Component, Reflect)]
 #[derive(Clone, PartialEq, Debug)]
-#[reflect(Component)]
+#[reflect(Component, PartialEq, Debug)]
 pub struct Picker {
     /// The default action [`ComponentId`] to pick if the picker fails to pick an action.
     pub default: ComponentId,
